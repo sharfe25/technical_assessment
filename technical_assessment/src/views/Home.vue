@@ -43,9 +43,6 @@ import {mapActions,mapState} from 'vuex';
       ],
     }),
     methods:{
-      add_invoices(){
-
-      }
     },
     computed: mapState([
         'invoices'
