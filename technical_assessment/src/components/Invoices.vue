@@ -115,7 +115,8 @@ export default {
       AddProducts,ProductInvoice
     },
     data:()=>({
-      discount:'',
+      num_product:0,
+      discount:0,
       client:'',
       date:`${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
       alert:false,
@@ -125,25 +126,36 @@ export default {
       ],
     }),
     methods:{
+      ...mapActions(['add_invoice']),
       save(){
-        if (this.quantity>10) {
+        let subtotal=0;
+        this.num_product=0;
+        this.products_array.forEach(product => {
+            this.num_product+=parseInt(product.quantity)
+            subtotal+=parseInt(product.quantity)*parseInt(product.price)
+        });
+        if (this.num_product>10) {
           this.alert=true
         }else{
           this.alert=false
-          // this.products_array.forEach(product => {
-          //    product.
-          // });
-          let subtotal=this.quantity
+          let total=0
+          if (parseInt(this.discount)>0) {
+            total= subtotal*(parseInt(this.discount)/100)
+          }else{
+            total= subtotal
+          }
+          
           let invoice={
             invoice_number:this.invoices.length+1,
             date:`${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
             client:this.client,
-            subtotal:'',
+            subtotal,
             discount:this.discount,
             products:this.products_array,
-            total:''
+            total,
           }
-          console.log(invoice)
+          this.add_invoice(invoice);
+          this.dialog=false;
         }
           
       }

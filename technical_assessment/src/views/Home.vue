@@ -4,6 +4,16 @@
     <v-container class="mt-8 pt-8">
       <h1 class="display-1 mt-5">INVOICES</h1> 
       <Invoices/>
+      <v-btn
+            dark
+            class="mx-5 mt-4"
+            outlined
+            color="indigo"
+            @click="invoice_list"
+            
+        >
+          Update Table
+        </v-btn>
       <v-data-table
         dense
         :headers="headers"
@@ -33,16 +43,17 @@ import {mapActions,mapState} from 'vuex';
         {
           text: 'Invoice Number',
           align: 'start',
-          sortable: false,
           value: 'id',
         },
         { text: 'Client', value: 'client' },
         { text: 'Subtotal', value: 'subtotal' },
         { text: 'Discount', value: 'discount' },
         { text: 'Total', value: 'total' },
+        { text: 'View More', value: 'actions',align: 'center', sortable: false}
       ],
     }),
     methods:{
+      ...mapActions(['invoice_list'])
     },
     computed: mapState([
         'invoices'
@@ -52,6 +63,7 @@ import {mapActions,mapState} from 'vuex';
     },
     mounted(){
       this.$store.dispatch('invoice_list')
+      this.invoice_list()
     }
   }
 </script>

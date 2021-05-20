@@ -52,13 +52,13 @@ export default {
     }),
     methods:{
         count_quantity(quantity,item){
-            this.count+=parseInt(quantity);
-            this.add_count(this.count)
+            // this.count+=parseInt(quantity);
+            // this.add_count(this.count)
             let stay=false;
             if(this.products.length>0){
                 this.products.forEach((product)=>{
                     if(product.id==item.id){
-                        product.quantity=parseInt(product.quantity)+parseInt(item.quantity)
+                        product.quantity=parseInt(item.quantity)
                         stay=true;
                     }
                 })
