@@ -1,6 +1,8 @@
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios"
+const vuexMapFields = require("vuex-map-fields");
 
 Vue.use(Vuex)
 
@@ -12,6 +14,10 @@ export default new Vuex.Store({
     products_invoice:[],
     quantity:0,
     products_array:[],
+    info_invoise:[],
+    dialogInvoiceSelected:false,
+    invoiceSelected:[],
+    id:0,
   },
   getters:{
     getInvoices(state){
@@ -26,7 +32,7 @@ export default new Vuex.Store({
     getProductsInvoice(state){
       console.log(state.products_invoice)
       return state.products_invoice
-    }
+    },
   },
   mutations: {
     setCount(state,items){
@@ -63,6 +69,14 @@ export default new Vuex.Store({
     },
     setProductsArray(state,items){
       state.products_array=items
+    },
+    setInfoInvoice(state,items){
+      state.info_invoise=items
+    },
+    passingInvoiceSelected(state, payload) {
+      state.dialogInvoiceSelected = payload.show;
+      state.invoiceSelected = payload.userSelected;
+      state.id=payload.id
     }
   },
   actions: {
@@ -107,13 +121,27 @@ export default new Vuex.Store({
     },
     add_invoice({commit},new_invoice) {
       const path = 'http://localhost:4000/invoices/new_invoice';
-      axios.post(path,new_invoice).then((res) => res.data.data.products)
+      axios.post(path,new_invoice).then((res) => res.data)
       .then((items)=>{
-        commit('setProducts',items) 
+        
       })
       .catch((error) => {
           console.log(error)
       })
+    },
+    view_more({commit},invoice) {
+      if (invoice==undefined) { 
+      }else{
+        invoice={ id:invoice}
+        const path = 'http://localhost:4000/invoices/individual_invoice';
+        axios.post(path,invoice).then((res) => res.data.data)
+        .then((items)=>{
+          commit('setInfoInvoice',items) 
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+      }
     },
   },
   modules: {

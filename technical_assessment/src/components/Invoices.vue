@@ -140,7 +140,7 @@ export default {
           this.alert=false
           let total=0
           if (parseInt(this.discount)>0) {
-            total= subtotal*(parseInt(this.discount)/100)
+            total= subtotal-(subtotal*(parseInt(this.discount)/100))
           }else{
             total= subtotal
           }
@@ -156,6 +156,7 @@ export default {
           }
           this.add_invoice(invoice);
           this.dialog=false;
+
         }
           
       }

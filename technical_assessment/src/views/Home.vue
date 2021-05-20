@@ -20,8 +20,18 @@
         :items="invoices"
         item-key="id"
         class="elevation-1 mt-7"
-      ></v-data-table>
+      >
       
+        <template v-slot:[`item.actions`]="{ item }">
+          <v-btn
+            color=" white--text"
+            icon text
+            @click="view_more(item.id);passingInvoiceSelected({invoiceSelected: [], show: true,id:item.id});"
+          ><v-icon color="primary" class="far fa-file-alt"></v-icon></v-btn>
+         
+        </template>
+      </v-data-table>
+       <InvoiceDetails/>
 
     </v-container>
     
@@ -31,12 +41,15 @@
 <script>
 import Appbar from '../components/App_bar.vue';
 import Invoices from '../components/Invoices.vue';
+import InvoiceDetails from '../components/Invoice_details.vue';
 import {mapActions,mapState} from 'vuex';
+import vuex from 'vuex'
+import {mapFields} from 'vuex-map-fields'
   export default {
     name: 'Home',
 
     components: {
-      Appbar,Invoices
+      Appbar,Invoices,InvoiceDetails
     },
     data:()=>({
       headers: [
@@ -53,11 +66,14 @@ import {mapActions,mapState} from 'vuex';
       ],
     }),
     methods:{
-      ...mapActions(['invoice_list'])
+      ...vuex.mapMutations(['passingInvoiceSelected']),
+      ...mapActions(['invoice_list','view_more'])
     },
-    computed: mapState([
+    computed: {...mapState([
         'invoices'
     ]),
+    ...mapFields(['invopiceSelected', 'dialogInvoiceSelected'])
+    },
     created() {
       
     },
