@@ -12,6 +12,7 @@
         <v-text-field 
             v-model="item.quantity"
             type="number"
+            :min="0"
             @change="count_quantity(item.quantity,item)"
         ></v-text-field>
     </template>
@@ -31,6 +32,7 @@ export default {
       
     },
     data:()=>({
+        
         products:[],
         count:0,
         data:[],
@@ -52,8 +54,7 @@ export default {
     }),
     methods:{
         count_quantity(quantity,item){
-            // this.count+=parseInt(quantity);
-            // this.add_count(this.count)
+            
             let stay=false;
             if(this.products.length>0){
                 this.products.forEach((product)=>{
@@ -61,6 +62,7 @@ export default {
                         product.quantity=parseInt(item.quantity)
                         stay=true;
                     }
+                   
                 })
             }
             if (stay==false) {
@@ -70,15 +72,6 @@ export default {
             
         },
         ...mapActions(['add_count','add_products_array']),
-        // ...mapActions(['add_product']),
-        // prueba(){
-        //     console.log(3)
-        // },
-        // view_products_invoice(){
-        //     let data=this.$store.state.products_invoice
-        //     this.data=data
-        //     return this.data
-        // }
     },
     created() {
         

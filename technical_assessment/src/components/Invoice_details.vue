@@ -14,12 +14,15 @@
               dark
             >INVOICE - {{info_invoise.invoice==undefined?0:info_invoise.invoice.id}}</v-toolbar>
             <v-card-text class="mt-5">
-              Date: {{info_invoise.invoice==undefined?0:info_invoise.invoice.date}} <br>
-              Client: {{info_invoise.invoice==undefined?0:info_invoise.invoice.client}} <br>
-              Discount: {{info_invoise.invoice==undefined?0:info_invoise.invoice.discount}} <br>
+            <div class="icon">
+                <v-icon x-large color="primary" class="">fas fa-user-tie</v-icon>    
+            </div> 
+            <h1 class="display-1 text-center my-3">{{info_invoise.invoice==undefined?0:info_invoise.invoice.client}}</h1>
+             <strong> Date:</strong> {{info_invoise.invoice==undefined?0:info_invoise.invoice.date}} <br>
+             <strong> Discount:</strong> {{info_invoise.invoice==undefined?0:info_invoise.invoice.discount}} <br>
               
             </v-card-text>
-            <v-divider class="mx-4"></v-divider>
+            <v-divider class="mx-2"></v-divider>
             <v-data-table
                 dense
                 :headers="headers"
@@ -33,8 +36,8 @@
                 class="text-right"
                 cols="12"
                 >
-                Subotal: {{info_invoise.invoice==undefined?0:info_invoise.invoice.subtotal}} <br>
-                Total: {{info_invoise.invoice==undefined?0:info_invoise.invoice.total}}
+                <strong>Subotal:</strong> {{info_invoise.invoice==undefined?0:info_invoise.invoice.subtotal}} <br>
+                <strong>Total:</strong> {{info_invoise.invoice==undefined?0:info_invoise.invoice.total}}
                 </v-col>
             </v-footer>
             <v-card-actions class="justify-end">
@@ -91,5 +94,8 @@ export default {
 </script>
 
 <style scoped>
-
+.icon{
+    display: flex !important;
+    justify-content:center !important;
+}
 </style>

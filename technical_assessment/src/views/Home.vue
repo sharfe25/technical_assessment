@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+  <v-app light>
     <Appbar/>
-    <v-container class="mt-8 pt-8">
-      <h1 class="display-1 mt-5">INVOICES</h1> 
+    <v-container class="mt-7 pt-7">
+      <h1 class=" mt-5 invoices_tittle text-center">INVOICES</h1> 
       <Invoices/>
       <v-btn
-            dark
+          
             class="mx-5 mt-4"
             outlined
             color="indigo"
@@ -52,6 +52,7 @@ import {mapFields} from 'vuex-map-fields'
       Appbar,Invoices,InvoiceDetails
     },
     data:()=>({
+      id:0,
       headers: [
         {
           text: 'Invoice Number',
@@ -70,7 +71,7 @@ import {mapFields} from 'vuex-map-fields'
       ...mapActions(['invoice_list','view_more'])
     },
     computed: {...mapState([
-        'invoices'
+        'invoices','products_array'
     ]),
     ...mapFields(['invopiceSelected', 'dialogInvoiceSelected'])
     },
@@ -87,5 +88,33 @@ import {mapFields} from 'vuex-map-fields'
 <style scoped>
 .title_appbar{
   letter-spacing: 3px;
+ 
+}
+.invoices_tittle{ 
+  font-size: 2.5rem !important;
+  background: -webkit-linear-gradient(#039BE5, #d6d6d6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  overflow: hidden;
+  line-height: 3rem;
+  white-space: nowrap;
+  border-right: 4px solid #ffffffbf;
+  animation: typerwrite 1.2s steps(26, end), cursor 500ms steps(26) infinite normal;
+}
+@keyframes cursor {
+    from {
+        border-right-color: transparent;
+    }
+    to {
+        border-right-color: transparent;
+    }
+}
+@keyframes typerwrite {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
 </style>

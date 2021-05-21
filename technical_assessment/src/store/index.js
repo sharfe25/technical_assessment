@@ -30,7 +30,6 @@ export default new Vuex.Store({
       return state.products
     },
     getProductsInvoice(state){
-      console.log(state.products_invoice)
       return state.products_invoice
     },
   },
@@ -66,6 +65,9 @@ export default new Vuex.Store({
       }
       
       // localStorage.setItem('invoice_products',JSON.stringify(state.products_invoice))
+    },
+    setProductClean(state){
+        state.products_invoice=[]
     },
     setProductsArray(state,items){
       state.products_array=items
@@ -121,13 +123,15 @@ export default new Vuex.Store({
     },
     add_invoice({commit},new_invoice) {
       const path = 'http://localhost:4000/invoices/new_invoice';
-      axios.post(path,new_invoice).then((res) => res.data)
+      axios.post(path,new_invoice).then((res) => res.data.data)
       .then((items)=>{
-        
+
       })
       .catch((error) => {
           console.log(error)
       })
+      commit('setProductClean')
+      
     },
     view_more({commit},invoice) {
       if (invoice==undefined) { 
